@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
-
+#Commands To Execute
+#dokku proxy:ports-remove wichproj http:3000:3000
+#dokku proxy:ports-add wichproj http:80:3000
+#dokku proxy:ports-add wichproj https:443:3000
+#dokku letsencrypt wichproj
 echo "Setting up SSH directory"
 SSH_PATH="$HOME/.ssh"
 mkdir -p "$SSH_PATH"
@@ -11,7 +15,7 @@ echo "$PRIVATE_KEY" > "$SSH_PATH/deploy_key"
 chmod 600 "$SSH_PATH/deploy_key"
 
 
-GIT_COMMAND="git push dokku@$HOST:$PROJECT $BRANCH:master"
+GIT_COMMAND="git push dokku@$HOST:$PROJECT $GITHUB_SHA:refs/heads/$BRANCH:master
 if [ -n "$FORCE_DEPLOY" ]; then
     echo "Enabling force deploy"
     GIT_COMMAND="$GIT_COMMAND --force"

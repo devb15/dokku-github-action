@@ -1,6 +1,6 @@
 name: 'Dokku Github Action'
 description: 'Deploy applications to Dokku'
-author: 'Vitaly Liber'
+author: 'devb15'
 branding:
   icon: 'upload-cloud'  
   color: 'blue'
