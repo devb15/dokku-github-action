@@ -7,13 +7,14 @@ set -e
 #dokku letsencrypt wichproj
 
 # Setup the SSH environment
+echo "setting up SSH Environment"
 mkdir -p ~/.ssh
 eval `ssh-agent -s`
-ssh-add - <<< "$SSH_PRIVATE_KEY"
+ssh-add - <<< "$PRIVATE_KEY"
 ssh-keyscan $DOKKU_HOST >> ~/.ssh/known_hosts
 
 # Setup the git environment
-echo "setting the git environment"
+echo "setting up git environment"
 git_repo="dokku@$HOST:$PROJECT"
 cd "$GITHUB_WORKSPACE"
 git remote add deploy "$git_repo"
