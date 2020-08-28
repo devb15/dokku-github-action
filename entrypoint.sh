@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 #Commands To Execute
 #dokku proxy:ports-remove wichproj http:3000:3000
 #dokku proxy:ports-add wichproj http:80:3000
@@ -11,7 +10,7 @@ echo "setting up SSH Environment"
 mkdir -p ~/.ssh
 eval `ssh-agent -s`
 ssh-add - <<< "$PRIVATE_KEY"
-ssh-keyscan $DOKKU_HOST >> ~/.ssh/known_hosts
+ssh-keyscan $HOST >> ~/.ssh/known_hosts
 
 # Setup the git environment
 echo "setting up git environment"
