@@ -19,7 +19,7 @@ cd "$GITHUB_WORKSPACE"
 git remote add deploy "$git_repo"
 
 # Prepare to push to Dokku git repository
-REMOTE_REF="$GITHUB_SHA:refs/heads/$BRANCH"
+REMOTE_REF="$GITHUB_SHA:refs/heads/$BRANCH:master"
 GIT_COMMAND="git push deploy $REMOTE_REF"
 
 if [ -n "$FORCE_DEPLOY" ]; then
