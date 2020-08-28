@@ -5,32 +5,28 @@ set -e
 #dokku proxy:ports-add wichproj http:80:3000
 #dokku proxy:ports-add wichproj https:443:3000
 #dokku letsencrypt wichproj
-echo "Setting up SSH directory"
-SSH_PATH="$HOME/.ssh"
-mkdir -p "$SSH_PATH"
-chmod 700 "$SSH_PATH"
 
-echo "Saving SSH key"
-echo "$PRIVATE_KEY" > "$SSH_PATH/deploy_key"
-chmod 600 "$SSH_PATH/deploy_key"
+# Setup the SSH environment
+mkdir -p ~/.ssh
+eval `ssh-agent -s`
+ssh-add - <<< "$SSH_PRIVATE_KEY"
+ssh-keyscan $DOKKU_HOST >> ~/.ssh/known_hosts
 
+# Setup the git environment
+echo "setting the git environment"
+git_repo="dokku@$HOST:$PROJECT"
+cd "$GITHUB_WORKSPACE"
+git remote add deploy "$git_repo"
 
-GIT_COMMAND="git push dokku@$HOST:$PROJECT $GITHUB_SHA:refs/heads/$BRANCH:master"
+# Prepare to push to Dokku git repository
+REMOTE_REF="$GITHUB_SHA:refs/heads/$BRANCH"
+GIT_COMMAND="git push deploy $REMOTE_REF"
+
 if [ -n "$FORCE_DEPLOY" ]; then
     echo "Enabling force deploy"
     GIT_COMMAND="$GIT_COMMAND --force"
 fi
 
-GIT_SSH_COMMAND="ssh -p ${PORT-22} -i $SSH_PATH/deploy_key"
-if [ -n "$HOST_KEY" ]; then
-    echo "Adding hosts key to known_hosts"
-    echo "$HOST_KEY" >> "$SSH_PATH/known_hosts"
-    chmod 600 "$SSH_PATH/known_hosts"
-else
-    echo "Disabling host key checking"
-    GIT_SSH_COMMAND="$GIT_SSH_COMMAND -o StrictHostKeyChecking=no"
-fi
-
 echo "The deploy is starting"
-
-GIT_SSH_COMMAND="$GIT_SSH_COMMAND" $GIT_COMMAND
+# Push to Dokku git repository
+GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $GIT_COMMAND
