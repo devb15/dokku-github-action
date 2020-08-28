@@ -32,6 +32,5 @@ else
 fi
 
 echo "The deploy is starting"
-echo "
 
 GIT_SSH_COMMAND="$GIT_SSH_COMMAND" $GIT_COMMAND
