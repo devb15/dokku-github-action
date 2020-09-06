@@ -28,6 +28,7 @@ echo "The deploy is starting"
 
 # Push to Dokku git repository
 echo "pushing to dokku"
+echo $SSH_COMMAND $GIT_COMMAND
 MY_CMD=$($SSH_COMMAND $GIT_COMMAND)
 
 #check for https
