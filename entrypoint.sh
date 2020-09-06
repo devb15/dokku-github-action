@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #Commands To Execute
 #dokku proxy:ports-remove wichproj http:3000:3000
 #dokku proxy:ports-add wichproj http:80:3000
