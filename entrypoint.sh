@@ -44,5 +44,8 @@ echo "The deploy is starting"
 GIT_SSH_COMMAND=$SSH_COMMAND $GIT_COMMAND
 
 
+echo "iam the last command please execute me"
+
+
 
 
