@@ -18,6 +18,7 @@ git_repo="dokku@$HOST:$PROJECT"
 cd "$GITHUB_WORKSPACE"
 git remote add deploy "$git_repo"
 git show-ref
+which ssh
 
 # Prepare to push to Dokku git repository
 REMOTE_REF="$GITHUB_SHA:refs/heads/$BRANCH"
@@ -29,7 +30,8 @@ if [ -n "$FORCE_DEPLOY" ]; then
     GIT_COMMAND="$GIT_COMMAND --force"
 fi
 
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no dokku@apps.mobird.in proxy:ports $PROJECT
+echo "executing ssh command"
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no dokku@$HOST proxy:ports $PROJECT
 
 echo "The deploy is starting"
 # Push to Dokku git repository
