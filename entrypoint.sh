@@ -42,7 +42,7 @@ CHECK_HTTPS=$($SSH_COMMAND dokku@$HOST proxy:ports $PROJECT | grep 443)
 
 echo $CHECK_HTTPS
 
-if [-n "$CHECK_HTTPS"] 
+if [-z "$CHECK_HTTPS"] 
 then
     echo "Enabling https"
     $SSH_COMMAND dokku@$HOST letsencrypt $PROJECT
