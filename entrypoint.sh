@@ -32,6 +32,7 @@ echo $SSH_COMMAND $GIT_COMMAND
 MY_CMD=$($GIT_COMMAND)
 
 #check for https
+echo "Enabling https"
 CHECK_HTTPS=$($SSH_COMMAND dokku@$HOST proxy:ports $PROJECT | grep 443)
 
 if [ -n "$CHECK_HTTPS" ]; then
