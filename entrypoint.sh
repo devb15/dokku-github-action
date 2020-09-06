@@ -24,18 +24,8 @@ if [ -n "$FORCE_DEPLOY" ]; then
     GIT_COMMAND="$GIT_COMMAND --force"
 fi
 
-echo "creating dokku app"
 
-$SSH_COMMAND dokku@$HOST apps:create $PROJECT
 
-echo "checking https"
-#check for https
-CHECK_HTTPS=$($SSH_COMMAND dokku@$HOST proxy:ports $PROJECT | grep 443)
-
-if [ -n $CHECK_HTTPS ]; then
-    echo "Enabling https"
-    $SSH_COMMAND dokku@$HOST letsencrypt $PROJECT
-fi
 
 
 echo "The deploy is starting"
@@ -46,6 +36,14 @@ GIT_SSH_COMMAND=$SSH_COMMAND $GIT_COMMAND
 
 echo "iam the last command please execute me"
 
+echo "checking https"
+#check for https
+CHECK_HTTPS=$($SSH_COMMAND dokku@$HOST proxy:ports $PROJECT | grep 443)
+
+if [ -n $CHECK_HTTPS ]; then
+    echo "Enabling https"
+    $SSH_COMMAND dokku@$HOST letsencrypt $PROJECT
+fi
 
 
 
