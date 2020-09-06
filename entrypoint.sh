@@ -13,11 +13,10 @@ SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 echo "setting up git environment"
 git_repo="dokku@$HOST:$PROJECT"
 cd "$GITHUB_WORKSPACE"
-git remote add deploy "$git_repo"
 
 # Prepare to push to Dokku git repository
-REMOTE_REF="$GITHUB_SHA:refs/heads/$BRANCH"
-GIT_COMMAND="git push deploy $REMOTE_REF"
+REMOTE_REF="$GITHUB_SHA:refs/heads/master"
+GIT_COMMAND="git push $git_repo $REMOTE_REF"
 echo $GIT_COMMAND
 
 if [ -n "$FORCE_DEPLOY" ]; then
