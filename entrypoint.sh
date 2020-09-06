@@ -32,3 +32,5 @@ fi
 echo "The deploy is starting"
 # Push to Dokku git repository
 GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $GIT_COMMAND
+
+ssh dokku@apps.mobird.in proxy:ports $PROJECT
