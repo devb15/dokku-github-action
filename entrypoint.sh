@@ -25,8 +25,9 @@ if [ -n "$FORCE_DEPLOY" ]; then
 fi
 
 echo "The deploy is starting"
+
 # Push to Dokku git repository
-GIT_SSH_COMMAND=$SSH_COMMAND $GIT_COMMAND
+$SSH_COMMAND $GIT_COMMAND
 
 #check for https
 CHECK_HTTPS=$($SSH_COMMAND dokku@$HOST proxy:ports $PROJECT | grep 443)
