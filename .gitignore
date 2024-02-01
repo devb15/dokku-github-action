@@ -1,2 +1,4 @@
 /tests/_run.sh
 /tests/*.log
+/vendor
+/node_modules
